@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.rocketfox.dropthedate.LoadingFragment">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/background"
+        android:id="@+id/imageView2"
+        android:scaleType="centerCrop" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:color/black"
+            android:id="@+id/imageView6"
+            android:alpha="0.45" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/loadingBar"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="true" />
+
+            <TextView
+                android:text="Loading.."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtLoadingHeader"
+                android:textSize="35sp"
+                android:layout_marginTop="14dp"
+                android:textColor="@android:color/background_light"
+                android:layout_below="@+id/loadingBar"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>

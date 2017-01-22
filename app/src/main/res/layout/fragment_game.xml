@@ -1,0 +1,237 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:htext="http://schemas.android.com/apk/res-auto"
+    tools:context="de.rocketfox.dropthedate.GameFragment"
+    android:background="@color/colorPrimary">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@android:color/darker_gray"
+                    android:id="@+id/imgTopEvent"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="false"
+                    android:adjustViewBounds="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@android:color/darker_gray"
+                    android:id="@+id/imgBottomEvent"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="false"
+                    android:adjustViewBounds="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:color/black"
+            android:id="@+id/imageView3"
+            android:alpha="0.67" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rlTop">
+
+                    <Button
+                        android:text="Back"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/btnBack"
+                        android:background="@drawable/layout_bg"
+                        android:elevation="6dp"
+                        android:textColor="@android:color/background_light"
+                        android:drawableLeft="@drawable/leftarrow"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="100dp"
+                        android:layout_margin="10dp" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/txtEventTop"
+                        android:textSize="30sp"
+                        android:textColor="@android:color/background_light"
+                        android:textAlignment="center"
+                        android:alpha="0.8"
+                        android:padding="2dp" />
+
+                    <TextView
+                        android:text="Highscore:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtHighScore"
+                        android:layout_marginRight="38dp"
+                        android:layout_marginEnd="38dp"
+                        android:textColor="@android:color/background_light"
+                        android:layout_alignBaseline="@+id/btnBack"
+                        android:layout_alignBottom="@+id/btnBack"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="55dp"
+                        android:id="@+id/txtDateTop"
+                        android:layout_below="@id/txtEventTop"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rlBottom">
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEventBottom"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="30sp"
+                        android:textAlignment="center"
+                        android:padding="2dp"
+                        android:alpha="0.8"
+                        android:textColor="@android:color/background_light" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="55dp"
+                        android:id="@+id/txtDateBottom"
+                        android:layout_below="@id/txtEventBottom"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                app:srcCompat="@drawable/middle"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/imgCenter"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:alpha="0.9" />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtScore"
+                android:textColor="@android:color/background_dark"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/checked"
+                android:id="@+id/imgCheckError"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="false"
+                android:alpha="0" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>
