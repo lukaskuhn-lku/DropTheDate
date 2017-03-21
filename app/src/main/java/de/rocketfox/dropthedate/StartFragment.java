@@ -13,6 +13,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+
 import io.paperdb.Paper;
 
 public class StartFragment extends Fragment {
@@ -42,6 +45,10 @@ public class StartFragment extends Fragment {
     public void onViewCreated(View v, Bundle savedInstance){
         super.onViewCreated(v, savedInstance);
 
+        ImageView background = (ImageView) v.findViewById(R.id.gifBackgroundStart);
+        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(background);
+        Glide.with(this).load("http://i.imgur.com/oKpoMX4.gif").into(imageViewTarget);
+
         Button btnSettings = (Button) v.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +71,6 @@ public class StartFragment extends Fragment {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
                 vibrator.vibrate(100);
                 Fragment fragment = GameFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();

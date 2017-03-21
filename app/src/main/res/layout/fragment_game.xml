@@ -95,24 +95,6 @@
                     android:layout_height="match_parent"
                     android:id="@+id/rlTop">
 
-                    <Button
-                        android:text="Back"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/btnBack"
-                        android:background="@drawable/layout_bg"
-                        android:elevation="6dp"
-                        android:textColor="@android:color/background_light"
-                        android:drawableLeft="@drawable/leftarrow"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_width="100dp"
-                        android:layout_margin="10dp" />
-
                     <TextView
                         android:text="TextView"
                         android:layout_width="match_parent"
@@ -134,22 +116,21 @@
                         android:layout_marginRight="38dp"
                         android:layout_marginEnd="38dp"
                         android:textColor="@android:color/background_light"
-                        android:layout_alignBaseline="@+id/btnBack"
-                        android:layout_alignBottom="@+id/btnBack"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:layout_marginTop="22dp" />
 
                     <TextView
-                        android:text="TextView"
+                        android:id="@+id/txtDateTop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="55dp"
-                        android:id="@+id/txtDateTop"
-                        android:layout_below="@id/txtEventTop"
+                        android:layout_below="@+id/txtEventTop"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@android:color/background_light"
-                        android:textSize="18sp" />
+                        android:layout_marginBottom="46dp"
+                        android:text="TextView"
+                        android:textColor="@color/date"
+                        android:textSize="25sp" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -166,28 +147,27 @@
                     android:id="@+id/rlBottom">
 
                     <TextView
-                        android:text="TextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/txtEventBottom"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="30sp"
-                        android:textAlignment="center"
-                        android:padding="2dp"
-                        android:alpha="0.8"
-                        android:textColor="@android:color/background_light" />
-
-                    <TextView
-                        android:text="TextView"
+                        android:id="@+id/txtDateBottom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="55dp"
-                        android:id="@+id/txtDateBottom"
-                        android:layout_below="@id/txtEventBottom"
+                        android:layout_below="@+id/txtEventBottom"
                         android:layout_centerHorizontal="true"
+                        android:text="TextView"
+                        android:textColor="@color/date"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/txtEventBottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.8"
+                        android:padding="2dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
                         android:textColor="@android:color/background_light"
-                        android:textSize="18sp" />
+                        android:textSize="30sp" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -199,37 +179,56 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/layout_bg"
+                android:drawableLeft="@drawable/leftarrow"
+                android:elevation="6dp"
+                android:text="Back"
+                android:textColor="@android:color/background_light" />
+
             <ImageView
-                app:srcCompat="@drawable/middle"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
                 android:id="@+id/imgCenter"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:alpha="0.9" />
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:alpha="1"
+                app:srcCompat="@drawable/middle" />
 
             <TextView
-                android:text="0"
+                android:id="@+id/txtScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtScore"
-                android:textColor="@android:color/background_dark"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textColor="@android:color/background_dark"
                 android:textSize="30sp" />
 
             <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                app:srcCompat="@drawable/checked"
-                android:id="@+id/imgCheckError"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:adjustViewBounds="false"
-                android:alpha="0" />
+                android:id="@+id/imgDecider"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignLeft="@+id/imgCenter"
+                android:layout_alignStart="@+id/imgCenter"
+                android:layout_alignTop="@+id/imgCenter"
+                android:alpha="1"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/checked" />
 
         </RelativeLayout>
     </FrameLayout>

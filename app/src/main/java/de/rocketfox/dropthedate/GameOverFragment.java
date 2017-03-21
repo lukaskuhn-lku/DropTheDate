@@ -2,11 +2,13 @@ package de.rocketfox.dropthedate;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import io.paperdb.Paper;
 
@@ -34,14 +40,18 @@ public class GameOverFragment extends Fragment {
         return fragment;
     }
 
+    ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             score = getArguments().getInt(ARG_PARAM1);
         }
-
+        MobileAds.initialize(getContext(), "ca-app-pub-4907387875634462~6965146039");
+        insertialAd = new InterstitialAd(getContext());
+        insertialAd.setAdUnitId("ca-app-pub-4907387875634462/8441879235");
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        requestNewInterstitial();
     }
 
     @Override
@@ -50,15 +60,61 @@ public class GameOverFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_game_over, container, false);
     }
 
+    private void requestNewInterstitial() {
+        try {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .build();
+
+            insertialAd.loadAd(adRequest);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    InterstitialAd insertialAd;
     @Override
     public void onViewCreated(View v, Bundle savedInstance){
         super.onViewCreated(v, savedInstance);
+
+        try {
+            if (insertialAd.isLoaded())
+                insertialAd.show();
+
+            Log.e("AD", insertialAd.isLoaded() + " status");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         Typeface coolvetica = Typeface.createFromAsset(getActivity().getAssets(), "fonts/coolvetica.ttf");
 
         TextView txtScore = (TextView) v.findViewById(R.id.txtScore);
         txtScore.setTypeface(coolvetica);
         txtScore.setText("Your score: " + score);
+
+        TextView txtAverage = (TextView) v.findViewById(R.id.txtaverage);
+        txtAverage.setTypeface(coolvetica);
+        int averageCounter = 1;
+        int averageSum = score;
+
+        if(Paper.book().read("averageCounter") == null) {
+            Paper.book().write("averageCounter", 1);
+        }else {
+            averageCounter = Paper.book().read("averageCounter");
+            averageCounter++;
+            Paper.book().write("averageCounter", averageCounter);
+        }
+
+        if (Paper.book().read("averageSum") == null) {
+            Paper.book().write("averageSum", score);
+        }else{
+            averageSum = Paper.book().read("averageSum");
+            averageSum += score;
+            Paper.book().write("averageSum", averageSum);
+        }
+
+        int average = averageSum/averageCounter;
+        txtAverage.setText("Your average is " + average);
+
 
         if(Paper.book().read("highscore") == null) {
             Paper.book().write("highscore", 0);

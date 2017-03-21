@@ -1,21 +1,29 @@
 package de.rocketfox.dropthedate;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.crash.FirebaseCrash;
 
 import org.w3c.dom.Text;
@@ -23,20 +31,15 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import de.rocketfox.dropthedate.Connections.DownloadImageTask;
 import de.rocketfox.dropthedate.Connections.HistoryEvent;
 import io.paperdb.Paper;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GameFragment extends Fragment {
 
-    private int Score;
+    private int Score = 0;
     private Vibrator vibrator;
 
     public GameFragment() {
@@ -51,11 +54,9 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         ArrayList<HistoryEvent> events = Paper.book().read("Database");
-       eventRandomizer = new EventRandomizer(events);
+        eventRandomizer = new EventRandomizer(events);
         Score = 0;
     }
 
@@ -69,180 +70,388 @@ public class GameFragment extends Fragment {
     public void onViewCreated(View v, Bundle savedInstance) {
         super.onViewCreated(v, savedInstance);
         try {
-            initialUiUpdate(v);
+            initializeGame(v);
         } catch (Exception ex) {
             FirebaseCrash.report(new Exception("Error in GameActivity: " + ex.getMessage()));
             ex.printStackTrace();
         }
     }
 
-    ImageView imgTopEvent;
-    ImageView imgBottomEvent;
-    TextView txtTopEvent;
-    TextView txtBottomEvent;
+
+    HistoryEvent topEvent;
+    HistoryEvent bottomEvent;
+
+    HistoryEvent preloadEventTop;
+    HistoryEvent preloadEventBottom;
+
+    ImageView topImage;
+    ImageView bottomImage;
+    ImageView deciderImage;
+
+    TextView txtEventTop;
+    TextView txtEventBottom;
+    TextView txtEventTopDate;
+    TextView txtEventBottomDate;
+    TextView txtHighscore;
     TextView txtScore;
-    HistoryEvent eventTop;
-    HistoryEvent eventBottom;
-    Bitmap bmpTop = null;
-    Bitmap bmpBottom = null;
-    HistoryEvent preloadEvent;
-    private void initialUiUpdate(View v) {
-        TextView txtDateTop = (TextView) v.findViewById(R.id.txtDateTop);
-        TextView txtDateBottom = (TextView) v.findViewById(R.id.txtDateBottom);
 
-        txtDateTop.setVisibility(View.GONE);
-        txtDateBottom.setVisibility(View.GONE);
+    Button btnBack;
+
+    RelativeLayout topLayout;
+    RelativeLayout bottomLayout;
 
 
-        txtScore = (TextView) v.findViewById(R.id.txtScore);
-        TextView txtHighscore = (TextView) v.findViewById(R.id.txtHighScore);
+    private void initializeGame(View v) {
+        initUIElements(v);
+        initTurn();
+    }
+
+    private void initTurn() {
+        gameState = GameState.Running;
+        loadEvents();
+        loadEventImagesAsync();
+        updateUI();
+        preloadNewEventsAsync();
+    }
+
+    private void preloadNewEventsAsync() {
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               preloadEventsFunc();
+           }
+       }).start();
+    }
+
+    private void preloadEventsFunc(){
+        preloadEventTop = null;
+        preloadEventBottom = null;
+
+        while(preloadEventTop == null && preloadEventBottom == null) {
+            preloadEventTop = eventRandomizer.getRandomEvent();
+            preloadEventBottom = eventRandomizer.getRandomEvent();
+        }
+
+        try {
+            Glide.with(this).load(preloadEventTop.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
+            Glide.with(this).load(preloadEventBottom.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
+           // preloadEventTop.preloadCache = new DownloadImageTask().execute(preloadEventTop.image).get(5, TimeUnit.SECONDS);
+           // preloadEventBottom.preloadCache = new DownloadImageTask().execute(preloadEventBottom.image).get(5, TimeUnit.SECONDS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void updateUI() {
+        txtEventTop.setText(topEvent.nameEN);
+        txtEventBottom.setText(bottomEvent.nameEN);
+
+        txtEventBottomDate.setText("");
+        txtEventTopDate.setText("");
+
+        //deciderImage.clearAnimation();
+
+
+        setHighscore();
+    }
+
+    private void setHighscore() {
         if(Paper.book().read("highscore") != null)
             txtHighscore.setText("Highscore: " + Paper.book().read("highscore"));
         else
             txtHighscore.setText("Highscore: 0");
+    }
 
+    private enum Cards{
+        TOP,
+        BOTTOM
+    }
+
+    private void initUIElements(View v) {
         Typeface coolvetica = Typeface.createFromAsset(getActivity().getAssets(), "fonts/coolvetica.ttf");
+
+        topImage = (ImageView) v.findViewById(R.id.imgTopEvent);
+        bottomImage = (ImageView) v.findViewById(R.id.imgBottomEvent);
+
+        deciderImage = (ImageView) v.findViewById(R.id.imgDecider);
+
+        txtEventTop = (TextView) v.findViewById(R.id.txtEventTop);
+        txtEventBottom = (TextView) v.findViewById(R.id.txtEventBottom);
+
+        txtEventTopDate = (TextView) v.findViewById(R.id.txtDateTop);
+        txtEventBottomDate = (TextView) v.findViewById(R.id.txtDateBottom);
+
+        txtEventTopDate.setVisibility(View.GONE);
+        txtEventBottomDate.setVisibility(View.GONE);
+
+        txtEventTopDate.setVisibility(View.GONE);
+        txtEventBottomDate.setVisibility(View.GONE);
+
+        txtHighscore = (TextView) v.findViewById(R.id.txtHighScore);
+        txtScore = (TextView) v.findViewById(R.id.txtScore);
+
+        txtEventTop.setTypeface(coolvetica);
+        txtEventBottom.setTypeface(coolvetica);
+        txtEventTopDate.setTypeface(coolvetica);
+        txtEventBottomDate.setTypeface(coolvetica);
         txtHighscore.setTypeface(coolvetica);
         txtScore.setTypeface(coolvetica);
 
+        topLayout = (RelativeLayout) v.findViewById(R.id.rlTop);
+        bottomLayout = (RelativeLayout) v.findViewById(R.id.rlBottom);
 
-        eventTop = eventRandomizer.getRandomEvent();
-        eventBottom = eventRandomizer.getRandomEventCloseToCurrentEvent(eventTop, 365);
-
-        while(eventTop == null){
-            eventTop = eventRandomizer.getRandomEvent();
-        }
-
-        while(eventBottom == null){
-            eventBottom = eventRandomizer.getRandomEventCloseToCurrentEvent(eventTop, 365);
-        }
-
-        while(eventBottom == eventTop) {
-            eventBottom = eventRandomizer.getRandomEventCloseToCurrentEvent(eventTop, 365);
-        }
-
-        imgTopEvent = (ImageView) v.findViewById(R.id.imgTopEvent);
-        imgBottomEvent = (ImageView) v.findViewById(R.id.imgBottomEvent);
-        txtTopEvent = (TextView) v.findViewById(R.id.txtEventTop);
-        txtBottomEvent = (TextView) v.findViewById(R.id.txtEventBottom);
-
-        try {
-            new DownloadImageTask(imgTopEvent).execute(eventTop.image);
-            new DownloadImageTask(imgBottomEvent).execute(eventBottom.image);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-        txtTopEvent.setText(eventTop.nameDE);
-        txtBottomEvent.setText(eventBottom.nameDE);
+        topLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gameState != GameState.Paused)
+                cardClick(Cards.TOP);
+            }
+        });
+        bottomLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gameState != GameState.Paused)
+                    cardClick(Cards.BOTTOM);
+            }
+        });
 
 
-        Button btnBack = (Button) v.findViewById(R.id.btnBack);
+        btnBack = (Button) v.findViewById(R.id.btnBack);
+        btnBack.setTypeface(coolvetica);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
+                Log.d("Button", "onClick: back");
             }
         });
-
-        RelativeLayout rlBottom = (RelativeLayout) v.findViewById(R.id.rlBottom);
-        RelativeLayout rlTop = (RelativeLayout) v.findViewById(R.id.rlTop);
-
-        rlBottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickOnCard(eventBottom, eventTop, false);
-            }
-        });
-
-        rlTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickOnCard(eventTop, eventBottom, true);
-            }
-        });
-
-        txtTopEvent.setTypeface(coolvetica);
-        txtBottomEvent.setTypeface(coolvetica);
-
-        Preload_Async();
     }
 
-    private void Preload_Async() {
-        new Thread(new Runnable() {
-            public void run(){
-                PreloadEvent();
-            }
-        }).start();
-    }
-
-    private void PreloadEvent() {
-        try {
-            preloadEvent = eventRandomizer.getRandomEventCloseToCurrentEvent(eventTop, 365 * 2);
-            preloadEvent.preloadCache = new DownloadImageTask().execute(preloadEvent.image).get();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void clickOnCard(HistoryEvent clickedEvent, HistoryEvent notClickedEvent, boolean topClick){
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+    private void cardClick(Cards decider) {
+        gameState = GameState.Paused;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date topDate = null;
+        Date bottomDate = null;
         try{
-            Date clickedEventDate = f.parse(clickedEvent.date);
-            Date notClickedEventDate = f.parse(notClickedEvent.date);
-
-            if(clickedEventDate.after(notClickedEventDate)){
-                //RIGHT
-                Score++;
-                txtScore.setText(String.valueOf(Score));
-                getNewCard(!topClick, clickedEvent);
-            }else{
-                //WRONG
-                vibrator.vibrate(100);
-                Fragment fragment = GameOverFragment.newInstance(Score);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                ft.replace(R.id.content_start, fragment).commit();
-            }
+            topDate = format.parse(topEvent.date);
+            bottomDate = format.parse(bottomEvent.date);
         }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        showDates(decider, topDate, bottomDate); //calls Decider() afterwards
+    }
+
+    private void Decider(Cards decider, Date topDate, Date bottomDate) {
+        Log.e("GAME", topDate.toString() + ">" + bottomDate.toString() + "=" + topDate.after(bottomDate));
+        if(decider == Cards.TOP){
+            if(topDate.after(bottomDate)){
+                showWin();
+            }else{
+                showLoose();
+            }
+        }else{
+            if(bottomDate.after(topDate)){
+                showWin();
+
+            }else{
+                showLoose();
+            }
+        }
+    }
+
+    private int fadeInDuration = 400;
+    private void showDates(final Cards decider,final Date topDate, final Date bottomDate) {
+        try {
+            String[] date = topEvent.date.toString().split("-");
+            txtEventTopDate.setText(date[2] + "." + date[1] + "." + date[0]);
+
+            AlphaAnimation fadeInTop = new AlphaAnimation(0.0f, 1.0f);
+
+            fadeInTop.setDuration(fadeInDuration);
+            fadeInTop.setFillAfter(true);
+            final AlphaAnimation fadeInBottom = new AlphaAnimation(0.0f, 1.0f);
+            fadeInBottom.setDuration(fadeInDuration);
+            fadeInBottom.setFillAfter(true);
+            fadeInTop.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    txtEventBottomDate.setVisibility(View.VISIBLE);
+                     String[] date = bottomEvent.date.toString().split("-");
+                    txtEventBottomDate.setText(date[2] + "." + date[1] + "." + date[0]);
+                    txtEventBottomDate.startAnimation(fadeInBottom);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            fadeInBottom.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Decider(decider, topDate, bottomDate);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+
+            txtEventTopDate.setVisibility(View.VISIBLE);
+            txtEventTopDate.startAnimation(fadeInTop);
+
+
+
+        }catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void getNewCard(boolean topCard, HistoryEvent stayingEvent) {
-        boolean preloadSuccess = true;
-
-        while(preloadEvent == null){
-            while(preloadEvent == stayingEvent) {
-                preloadEvent = eventRandomizer.getRandomEventCloseToCurrentEvent(stayingEvent, 365 * 2);
-                preloadSuccess = false;
-            }
-        }
-
-        while(preloadEvent == stayingEvent) {
-            preloadEvent = eventRandomizer.getRandomEventCloseToCurrentEvent(stayingEvent, 365 * 2);
-            preloadSuccess = false;
-        }
-
-        HistoryEvent event = preloadEvent;
-
-        if(topCard){
-            eventTop = event;
-            if(preloadSuccess)
-                 imgTopEvent.setImageBitmap(event.preloadCache);
-            else
-                new DownloadImageTask(imgTopEvent).execute(event.image);
-            txtTopEvent.setText(event.nameDE);
-        }else{
-            eventBottom = event;
-            if(preloadSuccess)
-                 imgBottomEvent.setImageBitmap(event.preloadCache);
-            else
-                new DownloadImageTask(imgBottomEvent).execute(event.image);
-            txtBottomEvent.setText(event.nameDE);
-        }
-
-        Preload_Async();
+    private void endGame() {
+        vibrator.vibrate(500);
+        Fragment fragment = GameOverFragment.newInstance(Score);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_start, fragment).commit();
     }
+
+    private void showLoose() {
+        gameState = GameState.Lost;
+        ScaleAnimation scale = new ScaleAnimation(0,1,0,1,Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scale.setDuration(300);
+        scale.setFillAfter(false);
+        //final MediaPlayer mp = MediaPlayer.create(this, R.raw.soho);
+
+        deciderImage.setImageResource(R.drawable.error);
+        deciderImage.setVisibility(View.VISIBLE);
+        deciderImage.startAnimation(scale);
+        scale.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                txtScore.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                txtScore.setVisibility(View.VISIBLE);
+                deciderImage.setVisibility(View.INVISIBLE);
+                endGame();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    private enum GameState{
+        Paused,
+        Running,
+        Lost
+    }
+
+    private GameState gameState = GameState.Running;
+
+    private void showWin() {
+        Score++;
+        txtScore.setText(String.valueOf(Score));
+
+        ScaleAnimation scale = new ScaleAnimation(0,1,0,1,Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scale.setDuration(300);
+        scale.setFillAfter(false);
+        deciderImage.setImageResource(R.drawable.checked);
+        deciderImage.setVisibility(View.VISIBLE);
+        deciderImage.startAnimation(scale);
+        scale.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                txtScore.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameState = GameState.Paused;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        deciderImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gameState == GameState.Paused && gameState != GameState.Lost) {
+                    Animation plopFade = AnimationUtils.loadAnimation(getContext(), R.anim.image_fade_plop);
+                    deciderImage.startAnimation(plopFade);
+                    plopFade.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            txtScore.setVisibility(View.VISIBLE);
+                            deciderImage.setVisibility(View.INVISIBLE);
+                            initTurn();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    private void loadEventImagesAsync() {
+       try {
+           Glide.with(this).load(topEvent.image).crossFade().into(topImage);
+           Glide.with(this).load(bottomEvent.image).crossFade().into(bottomImage);
+
+           /*if (topEvent.preloadCache == null) {
+               Glide.with(this).load(topEvent.image).crossFade().into(topImage);
+               //new DownloadImageTask(topImage).execute(topEvent.image);
+           } else {
+               Glide.with(this).load(topEvent.preloadCache).crossFade().into(topImage);
+               //topImage.setImageBitmap(topEvent.preloadCache);
+           }
+
+           if (bottomEvent.preloadCache == null) {
+               Glide.with(this).load(bottomEvent.image).crossFade().into(bottomImage);
+               //new DownloadImageTask(bottomImage).execute(bottomEvent.image);
+           } else {
+               Glide.with(this).load(bottomEvent.preloadCache).crossFade().into(bottomImage);
+               //bottomImage.setImageBitmap(bottomEvent.preloadCache);
+            } */
+       }catch(Exception e){
+           e.printStackTrace();
+           Log.e("ERROR", e.getMessage());
+       }
+    }
+
+    private void loadEvents() {
+        if(preloadEventTop != null && preloadEventBottom != null){
+            topEvent = preloadEventTop;
+            bottomEvent = preloadEventBottom;
+        }
+
+        while(topEvent == null && bottomEvent == null) {
+            topEvent = eventRandomizer.getRandomEvent();
+            bottomEvent = eventRandomizer.getRandomEvent();
+        }
+    }
+
 
 }

@@ -32,6 +32,7 @@ public class HistoryEvent {
         this.image = image;
         this.nameDE = nameDE;
         this.nameEN = nameEN;
+        this.preloadCache = null;
     }
 
 
