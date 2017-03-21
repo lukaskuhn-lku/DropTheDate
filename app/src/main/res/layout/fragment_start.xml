@@ -21,7 +21,7 @@
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.65"
+            android:alpha="0.75"
             app:srcCompat="@android:color/black" />
 
         <RelativeLayout

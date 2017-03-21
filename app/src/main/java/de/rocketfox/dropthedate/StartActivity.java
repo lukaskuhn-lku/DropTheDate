@@ -11,6 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.MobileAds;
+
 public class StartActivity extends AppCompatActivity {
 
     @Override
@@ -26,10 +28,14 @@ public class StartActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_start);
 
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4907387875634462~6965146039");
+
         Fragment loadingFragment = LoadingFragment.newInstance();
         FragmentManager frgManager = getSupportFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_start, loadingFragment).commit();
+
     }
+
 
     @Override
     protected void onResume(){

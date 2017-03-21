@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
+import java.util.Random;
+
 import io.paperdb.Paper;
 
 public class StartFragment extends Fragment {
@@ -41,13 +43,26 @@ public class StartFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_start, container, false);
     }
 
+    private String[] gifs;
+
     @Override
     public void onViewCreated(View v, Bundle savedInstance){
         super.onViewCreated(v, savedInstance);
 
+        gifs = new String[3];
+        gifs[0] = "https://media.giphy.com/media/3o6ZsVuQw2StpwojGE/giphy.gif";
+        gifs[1] = "https://media.giphy.com/media/HthlLE44GCZtm/giphy.gif";
+        gifs[2] = "https://media.giphy.com/media/YKBhLXKxjxHhK/giphy.gif";
+
+        int min = 1;
+        int max = 3;
+
+        Random r = new Random();
+        int random = r.nextInt(max - min + 1) + min;
+
         ImageView background = (ImageView) v.findViewById(R.id.gifBackgroundStart);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(background);
-        Glide.with(this).load("http://i.imgur.com/oKpoMX4.gif").into(imageViewTarget);
+        Glide.with(this).load(gifs[random-1]).into(imageViewTarget);
 
         Button btnSettings = (Button) v.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(new View.OnClickListener() {

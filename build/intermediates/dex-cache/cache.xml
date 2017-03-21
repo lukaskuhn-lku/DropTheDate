@@ -133,7 +133,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="384545c8b343e11522fa52347a92bd69862daf98">
+        sha1="fd6b9ddf2dcd8590047dcc74c33bb2a32773bf59">
         <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f7e4a2d091c2c3c511711f5eafb7f21aab4a355b/classes.dex" />
     </item>
     <item

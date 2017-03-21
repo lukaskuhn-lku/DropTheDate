@@ -17,9 +17,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+
+import java.util.Random;
 
 import io.paperdb.Paper;
 
@@ -40,18 +45,33 @@ public class GameOverFragment extends Fragment {
         return fragment;
     }
 
-    ;
+    private InterstitialAd interstitialAd;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             score = getArguments().getInt(ARG_PARAM1);
         }
-        MobileAds.initialize(getContext(), "ca-app-pub-4907387875634462~6965146039");
-        insertialAd = new InterstitialAd(getContext());
-        insertialAd.setAdUnitId("ca-app-pub-4907387875634462/8441879235");
-        vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+
+        interstitialAd = new InterstitialAd(this.getContext());
+        interstitialAd.setAdUnitId("ca-app-pub-4907387875634462/7477373236");
+
         requestNewInterstitial();
+
+        interstitialAd.setAdListener(new AdListener(){
+            public void onAdLoaded(){
+
+                int min = 1;
+                int max = 100;
+
+                Random r = new Random();
+                int random = r.nextInt(max - min + 1) + min;
+
+                 if(random > 75)
+                    interstitialAd.show();
+            }
+        });
+
     }
 
     @Override
@@ -61,31 +81,29 @@ public class GameOverFragment extends Fragment {
     }
 
     private void requestNewInterstitial() {
-        try {
-            AdRequest adRequest = new AdRequest.Builder()
-                    .build();
+       try {
+           AdRequest adRequest = new AdRequest.Builder()
+                   .build();
 
-            insertialAd.loadAd(adRequest);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+           interstitialAd.loadAd(adRequest);
+       }catch(Exception e){
+           e.printStackTrace();
+       }
     }
 
-    InterstitialAd insertialAd;
     @Override
     public void onViewCreated(View v, Bundle savedInstance){
         super.onViewCreated(v, savedInstance);
 
-        try {
-            if (insertialAd.isLoaded())
-                insertialAd.show();
-
-            Log.e("AD", insertialAd.isLoaded() + " status");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
         Typeface coolvetica = Typeface.createFromAsset(getActivity().getAssets(), "fonts/coolvetica.ttf");
+
+        int min = 1;
+        int max = 4;
+
+        Random r = new Random();
+        int random = r.nextInt(max - min + 1) + min;
+
+
 
         TextView txtScore = (TextView) v.findViewById(R.id.txtScore);
         txtScore.setTypeface(coolvetica);
@@ -113,8 +131,32 @@ public class GameOverFragment extends Fragment {
         }
 
         int average = averageSum/averageCounter;
-        txtAverage.setText("Your average is " + average);
 
+        try {
+            String[] gifsLoose = new String[4];
+            gifsLoose[0] = "https://media.giphy.com/media/ADr35Z4TvATIc/giphy.gif";
+            gifsLoose[1] = "https://media.giphy.com/media/hVmCCt5ikEUQ8/giphy.gif";
+            gifsLoose[2] = "https://media.giphy.com/media/hVmCCt5ikEUQ8/giphy.gif";
+            gifsLoose[3] = "https://media.giphy.com/media/14aUO0Mf7dWDXW/giphy.gif";
+
+            String[] gifsWin = new String[4];
+            gifsWin[0] = "https://media.giphy.com/media/7rj2ZgttvgomY/giphy.gif";
+            gifsWin[1] = "https://media.giphy.com/media/qcTMPQ7LxWNBC/giphy.gif";
+            gifsWin[2] = "https://media.giphy.com/media/a3zqvrH40Cdhu/giphy.gif";
+            gifsWin[3] = "https://media.giphy.com/media/asXCujsv7ddpm/giphy.gif";
+
+            ImageView background = (ImageView) v.findViewById(R.id.gifBackgroundGameOver);
+            GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(background);
+            if (score > average) {
+                Glide.with(this).load(gifsWin[random - 1]).into(imageViewTarget);
+            } else {
+                Glide.with(this).load(gifsLoose[random - 1]).into(imageViewTarget);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        txtAverage.setText("Your average is " + average);
 
         if(Paper.book().read("highscore") == null) {
             Paper.book().write("highscore", 0);
@@ -130,7 +172,6 @@ public class GameOverFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
-                vibrator.vibrate(100);
                 Fragment fragment = GameFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
