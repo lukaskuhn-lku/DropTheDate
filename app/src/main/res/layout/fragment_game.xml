@@ -185,6 +185,7 @@
 
             <Button
                 android:id="@+id/btnBack"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
@@ -194,11 +195,11 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/layout_bg"
                 android:drawableLeft="@drawable/leftarrow"
                 android:elevation="6dp"
                 android:text="Back"
-                android:textColor="@android:color/background_light" />
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imgCenter"

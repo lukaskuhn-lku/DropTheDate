@@ -87,9 +87,10 @@ public class StartFragment extends Fragment {
             @Override
             public void onClick(View v){
                 vibrator.vibrate(100);
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.button_click));
                 Fragment fragment = GameFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
                 ft.replace(R.id.content_start, fragment).addToBackStack("Start").commit();
             }
         });

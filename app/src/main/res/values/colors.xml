@@ -5,4 +5,6 @@
     <color name="colorAccent">#95372d</color>
     <color name="grey">#3d3d3d</color>
     <color name="date">#f5ca0a</color>
+    <color name="darkblue">#08134d</color>
+    <color name="white">#ffffff</color>
 </resources>

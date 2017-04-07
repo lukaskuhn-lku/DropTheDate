@@ -133,10 +133,10 @@ public class GameFragment extends Fragment {
         }
 
         try {
-            Glide.with(this).load(preloadEventTop.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
-            Glide.with(this).load(preloadEventBottom.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
-           // preloadEventTop.preloadCache = new DownloadImageTask().execute(preloadEventTop.image).get(5, TimeUnit.SECONDS);
-           // preloadEventBottom.preloadCache = new DownloadImageTask().execute(preloadEventBottom.image).get(5, TimeUnit.SECONDS);
+            //Glide.with(this).load(preloadEventTop.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
+            //Glide.with(this).load(preloadEventBottom.image).diskCacheStrategy(DiskCacheStrategy.SOURCE).preload();
+            preloadEventTop.preloadCache = new DownloadImageTask().execute(preloadEventTop.image).get(5, TimeUnit.SECONDS);
+            preloadEventBottom.preloadCache = new DownloadImageTask().execute(preloadEventBottom.image).get(5, TimeUnit.SECONDS);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -221,6 +221,7 @@ public class GameFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.button_click));
                 getActivity().onBackPressed();
                 Log.d("Button", "onClick: back");
             }
@@ -319,6 +320,7 @@ public class GameFragment extends Fragment {
         vibrator.vibrate(500);
         Fragment fragment = GameOverFragment.newInstance(Score);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         ft.replace(R.id.content_start, fragment).commit();
     }
 
@@ -341,7 +343,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 txtScore.setVisibility(View.VISIBLE);
-                deciderImage.setVisibility(View.INVISIBLE);
+                //deciderImage.setVisibility(View.INVISIBLE);
                 endGame();
             }
 
@@ -417,24 +419,21 @@ public class GameFragment extends Fragment {
 
     private void loadEventImagesAsync() {
        try {
-           Glide.with(this).load(topEvent.image).crossFade().into(topImage);
-           Glide.with(this).load(bottomEvent.image).crossFade().into(bottomImage);
-
-           /*if (topEvent.preloadCache == null) {
-               Glide.with(this).load(topEvent.image).crossFade().into(topImage);
-               //new DownloadImageTask(topImage).execute(topEvent.image);
+           if (topEvent.preloadCache == null) {
+               //Glide.with(this).load(topEvent.image).crossFade().into(topImage);
+               new DownloadImageTask(topImage).execute(topEvent.image);
            } else {
-               Glide.with(this).load(topEvent.preloadCache).crossFade().into(topImage);
-               //topImage.setImageBitmap(topEvent.preloadCache);
+               //Glide.with(this).load(topEvent.preloadCache).crossFade().into(topImage);
+               topImage.setImageBitmap(topEvent.preloadCache);
            }
 
            if (bottomEvent.preloadCache == null) {
-               Glide.with(this).load(bottomEvent.image).crossFade().into(bottomImage);
-               //new DownloadImageTask(bottomImage).execute(bottomEvent.image);
+               //Glide.with(this).load(bottomEvent.image).crossFade().into(bottomImage);
+               new DownloadImageTask(bottomImage).execute(bottomEvent.image);
            } else {
-               Glide.with(this).load(bottomEvent.preloadCache).crossFade().into(bottomImage);
-               //bottomImage.setImageBitmap(bottomEvent.preloadCache);
-            } */
+               //Glide.with(this).load(bottomEvent.preloadCache).crossFade().into(bottomImage);
+               bottomImage.setImageBitmap(bottomEvent.preloadCache);
+            }
        }catch(Exception e){
            e.printStackTrace();
            Log.e("ERROR", e.getMessage());

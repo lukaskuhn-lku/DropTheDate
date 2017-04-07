@@ -3,12 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/911f9ba6be91a5c58f6b38f8b7984654d0f80bd9/output/jars/classes.jar"
+        jar="/Users/Lukas/.android/build-cache/09925dc4a0ceabfeee5592a3eaa8b08168b15426/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_20d91f6434389e534e507363bbe4cb0bd15d9bc8/classes.dex" />
+        sha1="8a372c4191f80489770a231f7be4820b204b886a">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6154d08b1ed80a4ea99ee0a71529717b4e8e1d04/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -18,6 +18,132 @@
         revision="25.0.2"
         sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
         <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.0_2fa74656fe16c9dd0cad8f7145ddaad2309d36b8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/8bc518e8c910d2a922841dc19a281eca2632e4f4/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_efe5e9f302415a6280ad29ae4d8d4f3e16961492/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/9583c43b3626a7540bccc0a15885d74f179ee926/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb2ef781533c3f11c4e80341cbaebad275c66586">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_6726ebc0e79ce73baf9ae07a4710865ef00db21c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/2f3d6a0cc94644721be6dc3897ef292d80029bc1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_66277ce1466cf9e91610eba03299f7abb7c3f54d/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/39c60ff3a18ab06702c193ee1687e30190a9c083/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_4eddc720bbc43c9ea557891551ffeb0c0add07c0.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/39c60ff3a18ab06702c193ee1687e30190a9c083/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4eddc720bbc43c9ea557891551ffeb0c0add07c0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/9ef9f39eef2a41003c7925569e372cea6e03817f/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_45cd9cb299fbdbf4ecbec58bbefc0b2f9ba37748/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/2f3d6a0cc94644721be6dc3897ef292d80029bc1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_66277ce1466cf9e91610eba03299f7abb7c3f54d.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/DropTheDate/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2c826853650ab794e31daa67d213f6fb1bcf5ea3">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f7e4a2d091c2c3c511711f5eafb7f21aab4a355b/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/9ef9f39eef2a41003c7925569e372cea6e03817f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_45cd9cb299fbdbf4ecbec58bbefc0b2f9ba37748.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-tasks-1.4.0_a52444e84221976b55cd087bab3e3e2755faecf7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-applinks-1.4.0_0938a8478e307279f43fa4229c7741f6be3b5ce0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/17831fcf536a70a6722506659a5c0a2b7559cece/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f002ec411bd9a7b53ad41b2f8f59b383386fb06b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/911f9ba6be91a5c58f6b38f8b7984654d0f80bd9/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_20d91f6434389e534e507363bbe4cb0bd15d9bc8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Lukas/.android/build-cache/48f48280b179a88f1a2a3465a78f4d2f7516061d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="94ba691efc31bf53264db0716d9c9ec03843ea31">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_412b4b988f71c54fed520c110ab3a8caf522ae09/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -38,13 +164,22 @@
         <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d6ba1107ea28a3401f8b3e6565c462d5f1fd8034/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/8bc518e8c910d2a922841dc19a281eca2632e4f4/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/48f48280b179a88f1a2a3465a78f4d2f7516061d/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_efe5e9f302415a6280ad29ae4d8d4f3e16961492/classes.dex" />
+        sha1="94ba691efc31bf53264db0716d9c9ec03843ea31">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_412b4b988f71c54fed520c110ab3a8caf522ae09.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/6dfb8faeaa9bc9ab978578212917f4266091d856/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d0460bf07cc3657e0be518ca01c174493951c6b8">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_d6ba1107ea28a3401f8b3e6565c462d5f1fd8034.jar" />
     </item>
     <item
         is-multidex="true"
@@ -63,6 +198,33 @@
         revision="25.0.2"
         sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
         <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9e5e1de54369e369787cf30f4f5e23a1d52322a1/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/af3d29db69b10a9d6e80f12029240ff7bd426b8c/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_2c9e875d052abba97f2e6723ca9495a866172926.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/5c26770c8893fb59fced28f3055ce4fff089effa/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_9e5e1de54369e369787cf30f4f5e23a1d52322a1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/07cf90dc68b829ab9cd2687fbee719ae009817ab/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_3c627422140de0f6bb118b1d38e9be974bd805a3.jar" />
     </item>
     <item
         is-multidex="true"
@@ -93,15 +255,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/2f3d6a0cc94644721be6dc3897ef292d80029bc1/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="518768f3200963fbfec652f498da2c9d39245234">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_66277ce1466cf9e91610eba03299f7abb7c3f54d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/Lukas/.android/build-cache/6104cebec2fb5566d2c181a759254afcf64ea640/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -110,40 +263,22 @@
         <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f844d3b0d5fd78b594d231914f9648605b9b896e/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/39c60ff3a18ab06702c193ee1687e30190a9c083/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Lukas/.android/build-cache/6104cebec2fb5566d2c181a759254afcf64ea640/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4eddc720bbc43c9ea557891551ffeb0c0add07c0/classes.dex" />
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/pre-dexed/release/classes_f844d3b0d5fd78b594d231914f9648605b9b896e.jar" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/9ef9f39eef2a41003c7925569e372cea6e03817f/output/jars/classes.jar"
+        jar="/Users/Lukas/.android/build-cache/9583c43b3626a7540bccc0a15885d74f179ee926/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_45cd9cb299fbdbf4ecbec58bbefc0b2f9ba37748/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Lukas/DropTheDate/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fd6b9ddf2dcd8590047dcc74c33bb2a32773bf59">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f7e4a2d091c2c3c511711f5eafb7f21aab4a355b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/Lukas/.android/build-cache/17831fcf536a70a6722506659a5c0a2b7559cece/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
-        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f002ec411bd9a7b53ad41b2f8f59b383386fb06b/classes.dex" />
+        sha1="cb2ef781533c3f11c4e80341cbaebad275c66586">
+        <dex dex="/Users/Lukas/DropTheDate/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6726ebc0e79ce73baf9ae07a4710865ef00db21c/classes.dex" />
     </item>
     <item
         is-multidex="true"

@@ -4,6 +4,7 @@ package de.rocketfox.dropthedate;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -19,10 +20,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -67,7 +72,7 @@ public class GameOverFragment extends Fragment {
                 Random r = new Random();
                 int random = r.nextInt(max - min + 1) + min;
 
-                 if(random > 75)
+                 if(random > 80)
                     interstitialAd.show();
             }
         });
@@ -107,7 +112,11 @@ public class GameOverFragment extends Fragment {
 
         TextView txtScore = (TextView) v.findViewById(R.id.txtScore);
         txtScore.setTypeface(coolvetica);
-        txtScore.setText("Your score: " + score);
+        txtScore.setText("You scored");
+
+        TextView txtScoreNumber = (TextView) v.findViewById(R.id.txtScoreNumber);
+        txtScoreNumber.setTypeface(coolvetica);
+        txtScoreNumber.setText(String.valueOf(score));
 
         TextView txtAverage = (TextView) v.findViewById(R.id.txtaverage);
         txtAverage.setTypeface(coolvetica);
@@ -166,15 +175,24 @@ public class GameOverFragment extends Fragment {
                 Paper.book().write("highscore", score);
         }
 
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("http://dropthedate.com"))
+                .setContentTitle("I scored " + score + " points in DropTheDate! Can you compete?")
+                .setContentDescription("DropTheDate, your new addicting trivia app.")
+                .setImageUrl(Uri.parse("https://pixel.nymag.com/imgs/daily/intelligencer/2016/04/30/30-barack-obama-whcd-2016.w710.h473.2x.jpg"))
+                .build();
+
+        ShareButton shareBtn = (ShareButton) v.findViewById(R.id.fb_share);
+        shareBtn.setShareContent(content);
 
         ImageView replayButton = (ImageView) v.findViewById(R.id.imgReplayButton);
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.button_click));
                 Fragment fragment = GameFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
                 ft.replace(R.id.content_start, fragment).commit();
             }
         });
@@ -183,7 +201,11 @@ public class GameOverFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.button_click));
+                Fragment fragment = StartFragment.newInstance();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+                ft.replace(R.id.content_start, fragment).commit();
             }
         });
 

@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DropTheDateButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/darkblue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>
